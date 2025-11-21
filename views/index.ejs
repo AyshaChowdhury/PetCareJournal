@@ -1,11 +1,34 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+    <!--
+      Hero section:
+      Introduces the application and shows the main actions.
+    -->
+    <main class="container py-5">
+      <section class="home-hero text-center">
+        <!-- Simple circular logo placeholder -->
+        <div class="home-logo mx-auto mb-3">
+          <span class="home-logo-icon">🐾</span>
+        </div>
+
+        <h1 class="display-5 fw-bold mb-3">PetCare Journal</h1>
+        <p class="lead text-muted mb-4">
+          Track your pet's health, vet visits, grooming appointments,
+          vaccinations, and care notes in one simple online journal.
+        </p>
+
+        <!-- Primary call-to-action buttons -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a href="/entries" class="btn btn-primary btn-lg">
+            View Journal Entries
+          </a>
+          <a href="/entries/new" class="btn btn-outline-primary btn-lg">
+            Add New Entry
+          </a>
+        </div>
+      </section>
+    </main>
+
+
+<%- include('partials/footer') %>

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('./petcare-journal/app');
+var app = require('./app');
 var debug = require('debug')('petcare-journal:server');
 var http = require('http');
 

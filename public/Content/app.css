@@ -1,8 +1,54 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+/* =========================================================
+   PetCare Journal - Home page styles
+   These styles customize Bootstrap so the application
+   has a unique look that is different from the in-class
+   example, as required by the assignment.
+   ========================================================= */
+
+.home-hero {
+  max-width: 720px;      /* keeps content nicely centered */
+  margin: 0 auto;
 }
 
-a {
-  color: #00B7FF;
+.home-logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid #dee2e6;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.home-logo-icon {
+  font-size: 2.2rem;
+}
+
+/* Slightly customized branding */
+.navbar-brand {
+  letter-spacing: 0.04em;
+}
+
+/* Custom button colours to differ from default Bootstrap blue */
+.btn-primary {
+  background-color: #5b7cfa;
+  border-color: #5b7cfa;
+}
+
+.btn-primary:hover {
+  background-color: #435fd1;
+  border-color: #435fd1;
+}
+
+.btn-outline-primary {
+  border-color: #5b7cfa;
+  color: #5b7cfa;
+}
+
+.btn-outline-primary:hover {
+  background-color: #5b7cfa;
+  color: #ffffff;
+}
+
