@@ -4,20 +4,41 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// Load environment variables
+require('dotenv').config();
+
+// Import mongoose
+const mongoose = require('mongoose');
+
+// Import the database config to get the MongoDB URI
+const db = require('./db');
+
+// Connect to MongoDB using mongoose
+mongoose.connect(db.URI)
+  .then(() => {
+    console.log("MongoDB Connected Successfully");
+  })
+  .catch(err => {
+    console.error("Database Connection Error:", err);
+  });
+
+
+var indexRouter = require('../routes/index');
+var usersRouter = require('../routes/users');
+const { title } = require('process');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -35,7 +56,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {title: 'Error'});
 });
 
 module.exports = app;

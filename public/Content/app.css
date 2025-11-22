@@ -114,3 +114,18 @@ a:hover {
   border-color: #f7e2c5;
 }
 
+
+/* Journal entries list page */
+.journal-table-wrapper {
+  background-color: #fdf7ed;        /* very light beige card */
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+.journal-table th {
+  background-color: #f7e2c5;        /* soft beige header */
+}
+
+
+
+
