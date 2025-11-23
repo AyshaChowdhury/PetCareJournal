@@ -14,6 +14,7 @@
         entries: entries
         });
     } catch (err) {
+        console.error(err);
         next(err);
     }
     });
@@ -25,6 +26,7 @@
                 title: 'Add New Entry'
             });
         } catch (err) {
+            console.error(err);
             next(err);
         }
     });
@@ -47,23 +49,71 @@
                 res.redirect('/entries');
             })
         } catch (err) {
+            console.error(err);
             next(err);
         }   
     });
 
     //GET route for displaying the Edit Entry page - Update Operation
     router.get('/edit/:id', async (req, res, next) => {
+        try {
+            const entryId = req.params.id;
+            const entryToEdit = await PetCareEntry.findById(entryId);
+
+            // Format dates for HTML date inputs (YYYY-MM-DD)
+            if (entryToEdit.date) {
+            entryToEdit.date = entryToEdit.date.toISOString().split('T')[0];
+            }
+            if (entryToEdit.nextAppointment) {
+            entryToEdit.nextAppointment = entryToEdit.nextAppointment.toISOString().split('T')[0];
+            }
+            
+            res.render('edit', {
+                title: 'Edit Entry',
+                entry: entryToEdit
+            });
+        } catch (err) {
+            console.error(err);
+            next(err);
+        }
 
     });
 
     //POST route for processing the Edit Entry form - Update Operation
     router.post('/edit/:id', async (req, res, next) => {
-
+        try {
+            let entryId = req.params.id;
+            let updatedEntry = PetCareEntry({
+                "_id": entryId,
+                "petName": req.body.petName,
+                "petType": req.body.petType,
+                "age": req.body.age,
+                "entryType": req.body.entryType,    
+                "date": req.body.date,
+                "vetName": req.body.vetName,
+                "nextAppointment": req.body.nextAppointment,
+                "notes": req.body.notes
+            })
+            PetCareEntry.findByIdAndUpdate(entryId, updatedEntry).then(() => {
+                res.redirect('/entries');
+            })  
+        } catch (err) {
+            console.error(err);
+            next(err);
+        }
     });
 
     //GET route for deleting an entry - Delete Operation
-    router.get('/delete/:id', async (req, res, next) => {   
-
+    router.get('/delete/:id', async (req, res, next) => { 
+        try {
+            let entryId = req.params.id;
+            PetCareEntry.deleteOne({_id: entryId}).then(() => {
+                res.redirect('/entries');
+            })
+        } catch (err) {
+            console.error(err);
+            next(err);
+        }
     });
 
     // Export the router so app.js can use it
