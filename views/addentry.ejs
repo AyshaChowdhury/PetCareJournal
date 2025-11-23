@@ -1,0 +1,69 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<!-- Add Entry Form -->
+<div class="container">
+    <h1 class="h3 mb-4 mt-4">Add New Pet Care Entry</h1>
+    <form action="/entries/addentry" class="form" method="POST">
+        <div class="form-group mb-3">
+            <label for="petName">Pet Name</label>
+            <input type="text" class="form-control" 
+            id="petName" 
+            name="petName" 
+            placeholder="Your Pet's Name" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="petType">Pet Type</label>
+            <input type="text" class="form-control" 
+            id="petType" 
+            name="petType" 
+            placeholder="Cat/Dog" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" 
+            id="age" name="age" 
+            placeholder="Your Pet's Age" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="entryType">Entry Type</label>
+            <input type="text" class="form-control" 
+            id="entryType" 
+            name="entryType" 
+            placeholder="Vaccination/Grooming/Vet Visit" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" 
+            id="date" 
+            name="date" 
+            placeholder="Date" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="vetName">Vet Name</label>
+            <input type="text" class="form-control" 
+            id="vetName" 
+            name="vetName" 
+            placeholder="Veterinarian's Name">
+        </div>
+        <div class="form-group mb-3">
+            <label for="nextAppointment">Next Appointment</label>
+            <input type="date" class="form-control" 
+            id="nextAppointment" 
+            name="nextAppointment" 
+            placeholder="Next Appointment Date">
+        </div>
+        <div class="form-group mb-3">
+            <label for="notes">Notes</label>
+            <textarea class="form-control" 
+            id="notes" 
+            name="notes" 
+            rows="4" 
+            placeholder="Additional notes about your pet's care"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Entry</button>
+        <a href="/entries" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+
+<%- include('partials/footer') %>
