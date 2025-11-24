@@ -13,6 +13,17 @@ let mongoose = require('mongoose');
 // Import the database config to get the MongoDB URI
 let DB = require('./db');
 
+let session = require('express-session');
+let passport = require('passport');
+let passportLocal = require('passport-local');
+let localStrategy = passportLocal.Strategy;
+let flash = require('connect-flash');
+let cors = require('cors');
+
+// Import the user model
+let userModel = require('../models/usermodel');
+let User = userModel.User;
+
 //routes
 var indexRouter = require('../routes/index');
 var usersRouter = require('../routes/users');
@@ -28,6 +39,27 @@ mongoDB.on('error', console.error.bind(console, 'Connection Error:'));
 mongoDB.once('open', ()=>{
   console.log('Connected to MongoDB...');
 });
+
+// Setup express session
+app.use(session({
+  secret: "SomeSecret",
+  saveUninitialized: false,
+  resave: false
+}));
+
+// Initialize flash
+app.use(flash());
+
+// User authentication setup
+passport.use(User.createStrategy());
+
+// Serealize and deserialize the user info
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // view engine setup

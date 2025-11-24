@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="h3 mb-4 text-center text-danger">Confirm Delete</h1>
+                    
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> Are you sure you want to delete this entry?
+                    </div>
+
+                    <div class="mb-3">
+                        <p><strong>Pet Name:</strong> <%= entry.petName %></p>
+                        <p><strong>Pet Type:</strong> <%= entry.petType %></p>
+                        <p><strong>Entry Type:</strong> <%= entry.entryType %></p>
+                        <p><strong>Date:</strong> <%= entry.date %></p>
+                    </div>
+
+                    <form action="/entries/delete/<%= entry._id %>" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">
+                            Confirm Delete
+                        </button>
+                    </form>
+                    <a href="/entries" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

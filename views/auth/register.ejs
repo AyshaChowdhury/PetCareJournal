@@ -1,0 +1,63 @@
+<%- include('../partials/header') %>
+<%- include('../partials/nav') %>
+
+<main class="container">
+    <% if (messages && messages.length > 0) { %>
+    <div class="alert alert-danger mt-3">
+      <%= messages %>
+    </div>
+    <% } %>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="mt-5">Register Here</h2>
+            <form action="/register" method="POST" autocomplete="off">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" 
+                    class="form-control" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Enter your Username"
+                    required autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" 
+                    class="form-control" 
+                    id="password" 
+                    placeholder="Enter your Password"
+                    name="password" 
+                    required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" 
+                    class="form-control" 
+                    id="email" 
+                    placeholder="Enter your Email"
+                    name="email" 
+                    required>
+                </div>
+                <div class="mb-3">
+                    <label for="displayName" class="form-label">Display Name</label>
+                    <input type="text"
+                    class="form-control"
+                    id="displayName"
+                    placeholder="Enter your Display Name"
+                    name="displayName"
+                    required>
+                </div>
+                <div class="mb-3">
+                    <p>Already have an account? 
+                    <a href="/login">Login Here</a>
+                    </p>
+                </div>
+
+                <button type="submit" class="btn btn-success">Register</button>
+                <a href="/" class="btn btn-warning">Cancel</a>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>

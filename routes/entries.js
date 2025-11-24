@@ -11,7 +11,8 @@
         const entries = await PetCareEntry.find().sort({ date: -1 });
         res.render('entries', {
         title: 'Journal Entries',
-        entries: entries
+        entries: entries,
+        displayName: req.user ? req.user.displayName : ''
         });
     } catch (err) {
         console.error(err);
@@ -23,7 +24,8 @@
     router.get('/addentry', async (req, res, next) => {
         try {
             res.render('addentry', {
-                title: 'Add New Entry'
+                title: 'Add New Entry',
+                displayName: req.user ? req.user.displayName : ''
             });
         } catch (err) {
             console.error(err);
@@ -67,10 +69,11 @@
             if (entryToEdit.nextAppointment) {
             entryToEdit.nextAppointment = entryToEdit.nextAppointment.toISOString().split('T')[0];
             }
-            
+
             res.render('edit', {
                 title: 'Edit Entry',
-                entry: entryToEdit
+                entry: entryToEdit,
+                displayName: req.user ? req.user.displayName : ''
             });
         } catch (err) {
             console.error(err);
@@ -107,14 +110,30 @@
     router.get('/delete/:id', async (req, res, next) => { 
         try {
             let entryId = req.params.id;
-            PetCareEntry.deleteOne({_id: entryId}).then(() => {
-                res.redirect('/entries');
+            const entryToDelete = await PetCareEntry.findById(entryId);
+        res.render('delete', {
+            title: 'Confirm Delete',
+            entry: entryToDelete
             })
         } catch (err) {
             console.error(err);
             next(err);
         }
     });
+
+    // POST route for deleting the entry - Delete Operation
+    router.post('/delete/:id', async (req, res, next) => {
+        try {
+            let entryId = req.params.id;
+            PetCareEntry.deleteOne({_id: entryId}).then(() => {
+                res.redirect('/entries');
+            })
+        } catch (err) {
+            console.error(err);
+            next(err);
+        }       
+    });
+
 
     // Export the router so app.js can use it
     module.exports = router;
