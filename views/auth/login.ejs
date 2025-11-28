@@ -2,15 +2,20 @@
 <%- include('../partials/nav') %>
 
 <main class="container">
+    <!-- Display error messages if login fails -->
     <% if (messages && messages.length > 0) { %>
     <div class="alert alert-danger mt-3">
       <%= messages %>
     </div>
     <% } %>
+
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2 class="mt-5">Login</h2>
+
+            <!-- Login Form -->
             <form action="/login" method="POST" autocomplete="off">
+                <!-- Username Field -->
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" 
@@ -20,6 +25,8 @@
                     placeholder="Enter your Username"
                     required autofocus>
                 </div>
+
+                <!-- Password Field -->
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" 
@@ -29,11 +36,15 @@
                     name="password" 
                     required>
                 </div>
+
+                <!-- Register Link -->
                 <div class="mb-3">
                     <p>Don't have an account? 
                     <a href="/register">Register Here</a>
                     </p>
                 </div>
+
+                <!-- Submit and Cancel Buttons -->
                 <button type="submit" class="btn btn-success">Login</button>
                 <a href="/" class="btn btn-warning">Cancel</a>
             </form>

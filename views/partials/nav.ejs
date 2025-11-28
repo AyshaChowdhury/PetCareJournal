@@ -1,6 +1,7 @@
     <!-- Main navigation bar -->
     <nav class="navbar navbar-expand-lg petcare-navbar border-bottom shadow-sm">
       <div class="container">
+        <!-- Logo -->
         <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
             <img src="/Asset/images/icon.png" alt="PetCare icon" class="nav-logo me-2"> PetCare Journal
         </a>
@@ -14,34 +15,74 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- Navigation Links -->
         <div class="collapse navbar-collapse" id="mainNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/entries">Journal Entries</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/entries/addentry">Add Entry</a>
-            </li>
+            
+
+          <!-- Home Link - Always visible -->
+          <li class="nav-item">
+            <a class="nav-link <%= title === 'PetCare Journal' ? 'active' : '' %>" 
+              href="/">
+              <i class="fas fa-home"></i> Home
+            </a>
+          </li> 
+            
+
+          <!-- Protected Links - Only show when user is logged in -->
+          <% if (typeof displayName === 'string' && displayName) { %>
+          
+          <!-- Journal Entries Link -->
+          <li class="nav-item">
+            <a class="nav-link <%= title === 'Journal Entries' ? 'active' : '' %>" 
+               href="/entries">
+              <i class="fas fa-book"></i> Journal Entries
+            </a>
+          </li>
+
+
+          <!-- Add Entry Link -->
+          <li class="nav-item">
+            <a class="nav-link <%= title === 'Add New Entry' ? 'active' : '' %>" 
+               href="/entries/addentry">
+              <i class="fas fa-plus-circle"></i> Add Entry
+            </a>
+          </li>
 
            
-            <% if (typeof displayName=='string' && displayName){ %>
-              <li class="nav-text">
-                <span class="nav-link">Welcome, <%= displayName %>!</span>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link" href="/auth/logout">Logout</a>
+          <!-- Welcome Message -->
+          <li class="nav-item">
+            <span class="nav-link text-muted">
+              <i class="fas fa-user"></i> Welcome, <%= displayName %>!
+            </span>
+          </li>
+
+
+          <!-- Logout Link -->
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </li>
+
+          <% } else { %>
+          
+            <!-- Login and Register Links - Only show when NOT logged in -->
+            <li class="nav-item">
+              <a class="nav-link <%= title === 'Login' ? 'active' : '' %>" 
+                 href="/login">
+                <i class="fas fa-sign-in-alt"></i> Login
+              </a>
             </li>
-            <% } else { %>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/login">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/register">Register</a>
-              </li>
-            <% } %>
+
+            <li class="nav-item">
+              <a class="nav-link <%= title === 'Register' ? 'active' : '' %>" 
+                 href="/register">
+                <i class="fas fa-user-plus"></i> Register
+              </a>
+            </li>
+
+          <% } %>
 
           </ul>
         </div>

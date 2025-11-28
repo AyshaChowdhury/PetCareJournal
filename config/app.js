@@ -13,7 +13,9 @@ let mongoose = require('mongoose');
 // Import the database config to get the MongoDB URI
 let DB = require('./db');
 
+// Import modules for authentication
 let session = require('express-session');
+let MongoStore = require('connect-mongo');
 let passport = require('passport');
 let passportLocal = require('passport-local');
 let localStrategy = passportLocal.Strategy;
@@ -22,15 +24,18 @@ let cors = require('cors');
 
 // Import the user model
 let userModel = require('../models/usermodel');
-let User = userModel.User;
+let User = userModel.User; // Get the User model from the exported module
 
-//routes
+// Import the route files
 var indexRouter = require('../routes/index');
 var usersRouter = require('../routes/users');
 var entriesRouter = require('../routes/entries'); 
 const { title } = require('process');
 
+// Create Express application
 var app = express();
+
+
 
 // Connect to MongoDB using mongoose
 mongoose.connect(DB.URI)
@@ -40,9 +45,30 @@ mongoDB.once('open', ()=>{
   console.log('Connected to MongoDB...');
 });
 
+
+
+
+// VIEW ENGINE SETUP
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
+
+// MIDDLEWARE SETUP
+app.use(logger('dev'));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../node_modules')));
+
+
+// SESSION & AUTHENTICATION SETUP
+
 // Setup express session
 app.use(session({
-  secret: "SomeSecret",
+  secret: process.env.SESSION_SECRET || "SomeSecret",
   saveUninitialized: false,
   resave: false
 }));
@@ -50,28 +76,23 @@ app.use(session({
 // Initialize flash
 app.use(flash());
 
+
 // User authentication setup
+// Tell passport to use the local strategy defined in User model
 passport.use(User.createStrategy());
 
 // Serealize and deserialize the user info
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Initialize passport
+// Initialize passport (comes after session)
 app.use(passport.initialize());
+// Use passport session to maintain login state
 app.use(passport.session());
 
 
-// view engine setup
-app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.static(path.join(__dirname, '../node_modules')));
+// ROUTE SETUP
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
