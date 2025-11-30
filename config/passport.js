@@ -4,12 +4,16 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const User = require('../models/usermodel').User;
 
 
+// Determine the base URL (production vs development)
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+
 // GOOGLE OAUTH STRATEGY
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/auth/google/callback"
+    callbackURL: `${BASE_URL}/auth/google/callback`,
+    proxy: true
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -45,7 +49,8 @@ passport.use(new GoogleStrategy({
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "/auth/github/callback",
+    callbackURL: `${BASE_URL}/auth/github/callback`,
+    proxy: true,
     scope: ['user:email'] // Request email from GitHub
   },
   async (accessToken, refreshToken, profile, done) => {
