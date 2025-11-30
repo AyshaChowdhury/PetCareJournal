@@ -16,7 +16,7 @@ let DB = require('./db');
 // Import modules for authentication
 let session = require('express-session');
 let MongoStore = require('connect-mongo');
-let passport = require('passport');
+let passport = require('./passport');
 let passportLocal = require('passport-local');
 let localStrategy = passportLocal.Strategy;
 let flash = require('connect-flash');

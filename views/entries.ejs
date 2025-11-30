@@ -6,11 +6,30 @@
   <section class="mb-4">
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="h3 mb-0">Pet Journal Entries</h1>
-      <a href="/entries/addentry" class="btn btn-primary">
-        Add New Entry
-      </a>
+
+      <!-- Only show Add button if user is authenticated -->
+      <% if (isAuthenticated) { %>
+        <a href="/entries/addentry" class="btn btn-primary">
+          <i class="fas fa-plus-circle"></i> Add New Entry
+        </a>
+      <% } else { %>
+        <a href="/login" class="btn btn-outline-primary">
+          <i class="fas fa-sign-in-alt"></i> Login to Add Entries
+        </a>
+      <% } %>
     </div>
   </section>
+
+  <!-- Info message for unauthenticated users -->
+  <% if (!isAuthenticated) { %>
+    <div class="alert alert-info">
+      <i class="fas fa-info-circle"></i> 
+      You are viewing in <strong>read-only mode</strong>. 
+      <a href="/login" class="alert-link">Login</a> or 
+      <a href="/register" class="alert-link">Register</a> 
+      to add, edit, or delete entries.
+    </div>
+  <% } %>
 
     <!-- Entries Table -->
      <div class="row">
@@ -26,6 +45,11 @@
                     <th class="text-center col-1">Vet Name</th>
                     <th class="text-center col-1">Next Appointment</th>
                     <th class="text-center col-2">Notes</th>
+
+                    <!-- Only show Actions column if authenticated -->
+                    <% if (isAuthenticated) { %>
+                      <th class="text-center" colspan="2">Actions</th>
+                    <% } %>
                 </tr>
                 <!-- for/while loop -->
                  <% if (entries && entries.length > 0) { %>
@@ -41,25 +65,37 @@
                         <td class="text-center col-2"><%= entries[count].notes %></td>
                         <td class="text-center col-1">
 
-                          <!-- Edit and Delete buttons --> 
-                          <a href="/entries/edit/<%= entries[count]._id %>" 
-                            class="btn btn-primary btn-sm">
-                            <i class="fas fa-edit"></i> Edit </a></td>
-                        <td class="text-center col-1">
-                          <a href="/entries/delete/<%= entries[count]._id %>" 
-                            class="btn btn-danger btn-sm ms-2"> <i class="fas fa-trash"></i> Delete </a></td>
+                        <!-- Only show Edit/Delete buttons if authenticated -->
+                        <% if (isAuthenticated) { %>
+                          <td class="text-center">
+                            <a href="/entries/edit/<%= entries[count]._id %>" 
+                              class="btn btn-primary btn-sm">
+                              <i class="fas fa-edit"></i> Edit
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="/entries/delete/<%= entries[count]._id %>" 
+                              class="btn btn-danger btn-sm">
+                              <i class="fas fa-trash"></i> Delete
+                            </a>
+                          </td>
+                        <% } %>
                     </tr>
                   <% } %>
                   <% } else { %>
                     <tr>
-                    <td colspan="10" class="text-center py-5">
-                      <div class="text-muted">
-                        <i class="fas fa-inbox fa-3x mb-3"></i>
-                        <p class="lead">No entries yet</p>
-                        <p>Click "Add New Entry" to create your first pet care record!</p>
-                      </div>
-                    </td>
-                  </tr>
+                      <td colspan="<%= isAuthenticated ? '10' : '8' %>" class="text-center py-5">
+                        <div class="text-muted">
+                          <i class="fas fa-inbox fa-3x mb-3"></i>
+                          <p class="lead">No entries yet</p>
+                          <% if (isAuthenticated) { %>
+                            <p>Click "Add New Entry" to create your first pet care record!</p>
+                          <% } else { %>
+                            <p><a href="/login">Login</a> to add pet care records!</p>
+                          <% } %>
+                        </div>
+                      </td>
+                    </tr>
                   <% } %>
 
             </table>

@@ -48,8 +48,31 @@
                 <button type="submit" class="btn btn-success">Login</button>
                 <a href="/" class="btn btn-warning">Cancel</a>
             </form>
+
+            <!-- Divider -->
+            <div class="text-center my-4">
+                <span class="text-muted">OR</span>
+            </div>
+
+            <!-- OAuth Login Buttons -->
+            <div class="d-grid gap-2">
+                <!-- Google Login Button -->
+                <a href="/auth/google" class="btn btn-outline-danger btn-lg">
+                    <i class="fab fa-google"></i> Login with Google
+                </a>
+
+                <!-- GitHub Login Button -->
+                <a href="/auth/github" class="btn btn-outline-dark btn-lg">
+                    <i class="fab fa-github"></i> Login with GitHub
+                </a>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-link">Back to Home</a>
+            </div>
         </div>
     </div>
 </main>
 
 <%- include('../partials/footer') %>
+

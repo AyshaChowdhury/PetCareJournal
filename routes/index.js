@@ -171,4 +171,48 @@ router.get('/logout', function(req, res, next){
   });
 });
 
+
+// GOOGLE OAUTH ROUTES
+
+// Route to start Google OAuth
+router.get('/auth/google',
+  passport.authenticate('google', { 
+    scope: ['profile', 'email'] 
+  })
+);
+
+// Google OAuth callback route
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { 
+    failureRedirect: '/login',
+    failureFlash: true 
+  }),
+  function(req, res) {
+    // Successful authentication, redirect to entries
+    res.redirect('/entries');
+  }
+);
+
+
+// GITHUB OAUTH ROUTES
+
+// Route to start GitHub OAuth
+router.get('/auth/github',
+  passport.authenticate('github', { 
+    scope: ['user:email'] 
+  })
+);
+
+// GitHub OAuth callback route
+router.get('/auth/github/callback', 
+  passport.authenticate('github', { 
+    failureRedirect: '/login',
+    failureFlash: true 
+  }),
+  function(req, res) {
+    // Successful authentication, redirect to entries
+    res.redirect('/entries');
+  }
+);
+
 module.exports = router;

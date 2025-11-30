@@ -28,6 +28,24 @@ let User = mongoose.Schema({
         trim: true,
         required: 'Display Name is required'
     },
+
+    //OAuth provider (local, google, github)
+    provider: {
+        type: String,
+        default: 'local'
+    },
+
+    // OAuth provider ID (for Google/GitHub)
+    providerId: {
+        type: String,
+        default: ''
+    },
+
+    // Profile photo URL (from OAuth)
+    photo: {
+        type: String,
+        default: ''
+    },
     
     // Timestamp when user was created
     created: {
